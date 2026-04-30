@@ -17,3 +17,18 @@ void print_piece(FurniturePiece piece) {
            piece.piece_id,
            direction_text);
 }
+
+void print_return_message(ReturnMessage message) {
+    const char *status_text;
+
+    if (message.status == STATUS_ACCEPTED) {
+        status_text = "ACCEPTED";
+    } else if (message.status == STATUS_WRONG) {
+        status_text = "WRONG";
+    } else {
+        status_text = "UNKNOWN";
+    }
+
+    printf("Return Status: %s | ", status_text);
+    print_piece(message.piece);
+}
