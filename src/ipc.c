@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "ipc.h"
-
 void print_piece(FurniturePiece piece) {
     const char *direction_text;
 
@@ -31,4 +33,16 @@ void print_return_message(ReturnMessage message) {
 
     printf("Return Status: %s | ", status_text);
     print_piece(message.piece);
+}
+void log_event(const char *message) {
+    int fd = open(FIFO_PATH, O_WRONLY | O_NONBLOCK);
+
+    if (fd == -1) {
+        return;
+    }
+
+    write(fd, message, strlen(message));
+    write(fd, "\n", 1);
+
+    close(fd);
 }

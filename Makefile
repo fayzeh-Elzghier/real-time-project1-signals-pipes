@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g -fopenmp
 SRC = src/main.c src/config.c src/ipc.c src/team.c
 OUT = project1
 
