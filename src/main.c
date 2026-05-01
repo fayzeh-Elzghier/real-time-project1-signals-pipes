@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
-
+#include "graphics.h"
 #include "config.h"
 #include "team.h"
 #include "ipc.h"
@@ -261,5 +261,19 @@ int main(int argc, char *argv[]) {
     waitpid(logger_pid, NULL, 0);
     unlink(FIFO_PATH);
 
-    return 0;
+    int winning_team = 0;
+
+    if (team1_wins == config.max_wins) {
+          winning_team = 1;
+    } else if (team2_wins == config.max_wins) {
+    winning_team = 2;
+   }
+   if (getenv("DISPLAY") != NULL) {
+    show_final_result_graphics(team1_wins, team2_wins, winning_team);
+   } else {
+    printf("\nOpenGL display is not available. Skipping graphics window.\n");
+   }
+   show_final_result_graphics(team1_wins, team2_wins, winning_team);
+
+   return 0;
 }
